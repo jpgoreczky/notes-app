@@ -15,7 +15,8 @@ async function loadNotes() {
 
 function noteHtml(note) {
   const tags = note.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
-  return `<article class="note"><h3>${escapeHtml(note.title)}</h3><p>${escapeHtml(note.body)}</p><div class="tags">${tags}</div><div class="note-footer"><span class="note-date">Updated ${new Date(note.updatedAt).toLocaleString()}</span><div class="note-actions"><button class="edit-link" onclick="editNote('${note.id}')">Edit</button><button class="delete-link" onclick="deleteNote('${note.id}')">Delete</button></div></div></article>`;
+  const noteSummary = note.summary ? `<p class="note-summary"><strong>Summary:</strong> ${escapeHtml(note.summary)}</p>` : '';
+  return `<article class="note"><h3>${escapeHtml(note.title)}</h3><p>${escapeHtml(note.body)}</p>${noteSummary}<div class="tags">${tags}</div><div class="note-footer"><span class="note-date">Updated ${new Date(note.updatedAt).toLocaleString()}</span><div class="note-actions"><button class="edit-link" onclick="editNote('${note.id}')">Edit</button><button class="delete-link" onclick="deleteNote('${note.id}')">Delete</button></div></div></article>`;
 }
 
 function escapeHtml(text) {
@@ -31,7 +32,9 @@ form.addEventListener('submit', async (event) => {
   });
   const result = await response.json();
   if (!response.ok) return showMessage(result.error);
-  showMessage(`Saved! Smart tags: ${result.tags.join(', ')}`);
+  showMessage(`Saved! Tags: ${result.tags.join(', ')}`);
+  summary.textContent = `Summary: ${result.summary}`;
+  summary.classList.remove('hidden');
   resetForm();
   loadNotes();
 });

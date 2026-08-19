@@ -11,7 +11,22 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 function readNotes() {
-	return JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+	const notes = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
+	let changed = false;
+
+	notes.forEach((note) => {
+		if (!Array.isArray(note.tags) || note.tags.length === 0) {
+			note.tags = generateTags(note.title, note.body);
+			changed = true;
+		}
+		if (!note.summary) {
+			note.summary = makeSummary(note.body);
+			changed = true;
+		}
+	});
+
+	if (changed) saveNotes(notes);
+	return notes;
 }
 
 function saveNotes(notes) {
@@ -58,6 +73,7 @@ app.post('/api/notes', (req, res) => {
 		title,
 		body,
 		tags: generateTags(title, body),
+		summary: makeSummary(body),
 		createdAt: now,
 		updatedAt: now
 	};
@@ -76,6 +92,7 @@ app.put('/api/notes/:id', (req, res) => {
 	note.body = String(req.body.body || '').trim();
 	if (!note.title || !note.body) return res.status(400).json({ error: 'Title and body are required.' });
 	note.tags = generateTags(note.title, note.body);
+	note.summary = makeSummary(note.body);
 	note.updatedAt = new Date().toISOString();
 	saveNotes(notes);
 	res.json(note);
