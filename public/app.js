@@ -33,16 +33,16 @@ form.addEventListener('submit', async (event) => {
   const result = await response.json();
   if (!response.ok) return showMessage(result.error);
   showMessage(`Saved! Tags: ${result.tags.join(', ')}`);
-  summary.textContent = `Summary: ${result.summary}`;
+  summary.textContent = `${result.aiGenerated ? 'AI summary' : 'Simple summary'}: ${result.summary}`;
   summary.classList.remove('hidden');
-  resetForm();
+  resetForm(false);
   loadNotes();
 });
 
 document.querySelector('#summarize-button').addEventListener('click', async () => {
   const response = await fetch('/api/summarize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ body: bodyInput.value }) });
   const result = await response.json();
-  summary.textContent = `Summary: ${result.summary}`;
+  summary.textContent = `${result.aiGenerated ? 'AI summary' : 'Simple summary'}: ${result.summary}`;
   summary.classList.remove('hidden');
 });
 
@@ -64,6 +64,6 @@ async function deleteNote(id) {
 }
 
 document.querySelector('#cancel-button').addEventListener('click', resetForm);
-function resetForm() { form.reset(); noteIdInput.value = ''; document.querySelector('#form-title').textContent = 'Write a note'; document.querySelector('#cancel-button').classList.add('hidden'); summary.classList.add('hidden'); }
+function resetForm(hideSummary = true) { form.reset(); noteIdInput.value = ''; document.querySelector('#form-title').textContent = 'Write a note'; document.querySelector('#cancel-button').classList.add('hidden'); if (hideSummary) summary.classList.add('hidden'); }
 function showMessage(text) { message.textContent = text; setTimeout(() => { message.textContent = ''; }, 4000); }
 loadNotes();

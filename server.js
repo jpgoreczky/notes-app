@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -21,6 +23,10 @@ function readNotes() {
 		}
 		if (!note.summary) {
 			note.summary = makeSummary(note.body);
+			changed = true;
+		}
+		if (typeof note.aiGenerated !== 'boolean') {
+			note.aiGenerated = false;
 			changed = true;
 		}
 	});
@@ -58,22 +64,68 @@ function makeSummary(body) {
 	return sentences.slice(0, 2).join(' ').slice(0, 300);
 }
 
+async function generateWithAI(title, body) {
+	const fallback = {
+		tags: generateTags(title, body),
+		summary: makeSummary(body),
+		aiGenerated: false
+	};
+	if (!process.env.GEMINI_API_KEY) return fallback;
+
+	try {
+		const request = {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				contents: [{
+					parts: [{
+						text: `Read this note and return only valid JSON in this format: {"tags":["tag1"],"summary":"short summary"}. Choose 1 to 3 lowercase tags. Keep the summary under 300 characters.\nTitle: ${title}\nNote: ${body}`
+					}]
+				}]
+			})
+		};
+		const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${process.env.GEMINI_API_KEY}`;
+		let response = await fetch(url, request);
+		if (response.status === 429 || response.status === 503) {
+			await new Promise((resolve) => setTimeout(resolve, 500));
+			response = await fetch(url, request);
+		}
+		if (!response.ok) throw new Error(`Gemini API returned ${response.status}: ${(await response.text()).slice(0, 200)}`);
+
+		const data = await response.json();
+		const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+		const result = JSON.parse(text.replace(/^```json\s*|\s*```$/g, '').trim());
+		if (!Array.isArray(result.tags) || typeof result.summary !== 'string') throw new Error('Invalid Gemini response');
+
+		return {
+			tags: result.tags.map((tag) => String(tag).toLowerCase()).slice(0, 3),
+			summary: result.summary.slice(0, 300),
+			aiGenerated: true
+		};
+	} catch (error) {
+		console.error('Gemini request failed, using local fallback:', error.message);
+		return fallback;
+	}
+}
+
 app.get('/api/notes', (req, res) => {
 	res.json(readNotes().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)));
 });
 
-app.post('/api/notes', (req, res) => {
+app.post('/api/notes', async (req, res) => {
 	const title = String(req.body.title || '').trim();
 	const body = String(req.body.body || '').trim();
 	if (!title || !body) return res.status(400).json({ error: 'Title and body are required.' });
 
+	const generated = await generateWithAI(title, body);
 	const now = new Date().toISOString();
 	const note = {
 		id: crypto.randomUUID(),
 		title,
 		body,
-		tags: generateTags(title, body),
-		summary: makeSummary(body),
+		tags: generated.tags,
+		summary: generated.summary,
+		aiGenerated: generated.aiGenerated,
 		createdAt: now,
 		updatedAt: now
 	};
@@ -83,7 +135,7 @@ app.post('/api/notes', (req, res) => {
 	res.status(201).json(note);
 });
 
-app.put('/api/notes/:id', (req, res) => {
+app.put('/api/notes/:id', async (req, res) => {
 	const notes = readNotes();
 	const note = notes.find((item) => item.id === req.params.id);
 	if (!note) return res.status(404).json({ error: 'Note not found.' });
@@ -91,8 +143,10 @@ app.put('/api/notes/:id', (req, res) => {
 	note.title = String(req.body.title || '').trim();
 	note.body = String(req.body.body || '').trim();
 	if (!note.title || !note.body) return res.status(400).json({ error: 'Title and body are required.' });
-	note.tags = generateTags(note.title, note.body);
-	note.summary = makeSummary(note.body);
+	const generated = await generateWithAI(note.title, note.body);
+	note.tags = generated.tags;
+	note.summary = generated.summary;
+	note.aiGenerated = generated.aiGenerated;
 	note.updatedAt = new Date().toISOString();
 	saveNotes(notes);
 	res.json(note);
@@ -106,8 +160,10 @@ app.delete('/api/notes/:id', (req, res) => {
 	res.status(204).end();
 });
 
-app.post('/api/summarize', (req, res) => {
-	res.json({ summary: makeSummary(String(req.body.body || '')) });
+app.post('/api/summarize', async (req, res) => {
+	const body = String(req.body.body || '');
+	const generated = await generateWithAI('', body);
+	res.json({ summary: generated.summary, aiGenerated: generated.aiGenerated });
 });
 
 app.get('/', (req, res) => {
