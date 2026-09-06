@@ -8,7 +8,8 @@
     ],
     "createdAt": "2026-08-19T20:51:59.621Z",
     "updatedAt": "2026-08-19T20:52:07.644Z",
-    "summary": "test test, this is a test.  i am testing this."
+    "summary": "test test, this is a test.  i am testing this.",
+    "aiGenerated": false
   },
   {
     "id": "532b4985-a2a0-4777-aa2a-76273883212e",
@@ -19,6 +20,173 @@
     ],
     "summary": "this is a second test.  i am testing this web app.",
     "createdAt": "2026-08-19T20:54:17.077Z",
-    "updatedAt": "2026-08-19T20:54:33.624Z"
+    "updatedAt": "2026-08-19T20:54:33.624Z",
+    "aiGenerated": false
+  },
+  {
+    "id": "e76503c2-13c0-4bfa-a43a-9064027a3e6f",
+    "title": "test 3",
+    "body": "this is my third test. the quick brown fox jumped over a the lazy dog. this is a test.",
+    "tags": [
+      "general"
+    ],
+    "summary": "this is my third test.  the quick brown fox jumped over a the lazy dog.",
+    "aiGenerated": false,
+    "createdAt": "2026-08-19T22:52:28.004Z",
+    "updatedAt": "2026-08-19T22:52:28.004Z"
+  },
+  {
+    "id": "abe6a97f-5c00-474f-883d-906232009122",
+    "title": "test 6",
+    "body": "this is the sixth test. I just added gemini ai integration. does this work?",
+    "tags": [
+      "work"
+    ],
+    "summary": "this is the sixth test.  I just added gemini ai integration.",
+    "createdAt": "2026-08-19T23:19:03.283Z",
+    "updatedAt": "2026-08-19T23:19:03.283Z",
+    "aiGenerated": false
+  },
+  {
+    "id": "54c9b80b-af32-4fdf-9903-db4680774119",
+    "title": "test 10",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "ideas"
+    ],
+    "summary": "The funeral was dignified.  As pleasant as it could be, considering the circumstances.",
+    "aiGenerated": false,
+    "createdAt": "2026-08-19T23:43:42.689Z",
+    "updatedAt": "2026-08-19T23:43:42.689Z"
+  },
+  {
+    "id": "bac89339-4ca1-4bfa-99a3-c10c3a762f2d",
+    "title": "test 11",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "ideas"
+    ],
+    "summary": "The funeral was dignified.  As pleasant as it could be, considering the circumstances.",
+    "aiGenerated": false,
+    "createdAt": "2026-08-19T23:54:30.076Z",
+    "updatedAt": "2026-08-19T23:54:30.076Z"
+  },
+  {
+    "id": "d6b5dca5-3913-4078-bb91-cccd0ab1b062",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "grief",
+      "letter",
+      "loss"
+    ],
+    "summary": "Following Philip's funeral, the writer reaches out to Helen. Reflecting on Philip's final peaceful words about Helen, the writer asks if she has his missing blue cardigan, seeking one last cherished item to remember him by.",
+    "aiGenerated": true,
+    "createdAt": "2026-09-06T09:15:19.313Z",
+    "updatedAt": "2026-09-06T09:15:19.313Z"
+  },
+  {
+    "id": "9f486709-ea86-4d6d-9516-19bfd51d3a8f",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "grief",
+      "loss",
+      "reconciliation"
+    ],
+    "summary": "Following Philip's funeral, the speaker confronts Helen to share that Philip forgave her before he died. The speaker asks if Helen has Philip's missing blue cardigan, wishing to hold onto a final memory of him.",
+    "aiGenerated": true,
+    "createdAt": "2026-09-06T09:15:19.557Z",
+    "updatedAt": "2026-09-06T09:15:19.557Z"
+  },
+  {
+    "id": "83d77420-3876-49ff-a0ed-815428f61c37",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "ideas"
+    ],
+    "summary": "The funeral was dignified.  As pleasant as it could be, considering the circumstances.",
+    "aiGenerated": false,
+    "createdAt": "2026-09-06T09:15:19.770Z",
+    "updatedAt": "2026-09-06T09:15:19.770Z"
+  },
+  {
+    "id": "07471486-8e3b-4922-b703-030ffc2af677",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "grief",
+      "bereavement",
+      "reconciliation"
+    ],
+    "summary": "Following Philip's funeral, a speaker addresses Helen about Philip's final days and lack of resentment towards her. Despite mixed feelings about Helen's absence, the speaker asks if Helen has Philip's blue cardigan, seeking it as a final keepsake.",
+    "aiGenerated": true,
+    "createdAt": "2026-09-06T09:15:20.024Z",
+    "updatedAt": "2026-09-06T09:15:20.024Z"
+  },
+  {
+    "id": "3f2f5049-3c9d-49e6-bd7c-3b35fd3a31a5",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "ideas"
+    ],
+    "summary": "The funeral was dignified.  As pleasant as it could be, considering the circumstances.",
+    "aiGenerated": false,
+    "createdAt": "2026-09-06T09:15:21.455Z",
+    "updatedAt": "2026-09-06T09:15:21.455Z"
+  },
+  {
+    "id": "02630a2e-f5a9-4a53-86d3-0689bd64461e",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "ideas"
+    ],
+    "summary": "The funeral was dignified.  As pleasant as it could be, considering the circumstances.",
+    "aiGenerated": false,
+    "createdAt": "2026-09-06T09:15:27.158Z",
+    "updatedAt": "2026-09-06T09:15:56.594Z"
+  },
+  {
+    "id": "a4d3ad87-6121-4a9e-bf70-2217ffab47f7",
+    "title": "test 12",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "ideas"
+    ],
+    "summary": "The funeral was dignified.  As pleasant as it could be, considering the circumstances.",
+    "aiGenerated": false,
+    "createdAt": "2026-09-06T09:16:18.497Z",
+    "updatedAt": "2026-09-06T09:16:18.497Z"
+  },
+  {
+    "id": "6c27d6cf-9f8a-4f73-9836-8273f11b4821",
+    "title": "test 13",
+    "body": "The funeral was dignified. As pleasant as it could be, considering the\ncircumstances. You were missed, in case you were wondering. Comments and whispers, a\nsnigger or two from colleagues, anybody in the know. I suppose I should thank you for not\nturning up at the very least. (Silence.) We spoke about you, right before the end. Philip didn’t\nwant to die some estranged cliche so we sat with a bottle of wine and he told me everything. He\ndidn’t blame you, which angered me at the time. Now it seems honourable, in a funny sort of\nway.\nI never wanted to meet you. I didn’t think I’d ever find myself in front of you, only … I was\nwondering, Helen, if you might have his blue cardigan? I’ve torn the house apart looking for it,\nand well, naturally, I thought about the possibility of it being here at yours. That’s all I want: to\nwring the last of him from the things he loved.",
+    "tags": [
+      "personal",
+      "grief",
+      "drama"
+    ],
+    "summary": "The narrator writes to Helen following Philip's funeral, revealing that Philip forgave her before he died. The narrator is searching for Philip's blue cardigan and asks Helen if she possesses it.",
+    "aiGenerated": true,
+    "createdAt": "2026-09-06T09:20:33.151Z",
+    "updatedAt": "2026-09-06T09:20:33.151Z"
+  },
+  {
+    "id": "6525d0e5-25a4-449d-ad1a-de755e6310bc",
+    "title": "test 14",
+    "body": "Jessie? Jessie! Come do the dishes! You can’t? Why not? You’re reading? Oh well. There are worse things.\nJessie? Jessie! Help me with the groceries! No? You’re at a good part? Fine. Just this once.\nJessie? Jessie! Can you watch your brother for a bit, while I go out? You’re almost done? Ok. I’ll hire a sitter.\nJessie? Jessie! Will you please take out the trash? You’re busy? Five minutes, that’s all.\nJessie? Jessie! Help me set up for your sister’s party! Put down that book! Right now! Oh, your favorite character died? I’m sorry. I’ll let you mourn. Don’t worry. Take all the time you need.\nJessie? Jessie! Fold your laundry! You’re at a boring part? Then why can’t you help? Ohh. You have to get through it, so you can read the more exciting part? Ok…\nJessie? Jessie! We’re going to the bookstore! Oh, so now you’re available.",
+    "tags": [
+      "reading",
+      "parenting",
+      "books"
+    ],
+    "summary": "A parent repeatedly asks their child, Jessie, to help with various chores, but Jessie constantly declines to prioritize finishing her book. The parent eventually lures her out of the house by suggesting a trip to the bookstore.",
+    "aiGenerated": true,
+    "createdAt": "2026-09-06T09:27:51.957Z",
+    "updatedAt": "2026-09-06T09:27:51.957Z"
   }
 ]

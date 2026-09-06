@@ -4,7 +4,6 @@ const bodyInput = document.querySelector('#body');
 const noteIdInput = document.querySelector('#note-id');
 const notesList = document.querySelector('#notes-list');
 const message = document.querySelector('#message');
-const summary = document.querySelector('#summary');
 
 async function loadNotes() {
   const response = await fetch('/api/notes');
@@ -33,17 +32,8 @@ form.addEventListener('submit', async (event) => {
   const result = await response.json();
   if (!response.ok) return showMessage(result.error);
   showMessage(`Saved! Tags: ${result.tags.join(', ')}`);
-  summary.textContent = `${result.aiGenerated ? 'AI summary' : 'Simple summary'}: ${result.summary}`;
-  summary.classList.remove('hidden');
-  resetForm(false);
+  resetForm();
   loadNotes();
-});
-
-document.querySelector('#summarize-button').addEventListener('click', async () => {
-  const response = await fetch('/api/summarize', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ body: bodyInput.value }) });
-  const result = await response.json();
-  summary.textContent = `${result.aiGenerated ? 'AI summary' : 'Simple summary'}: ${result.summary}`;
-  summary.classList.remove('hidden');
 });
 
 async function editNote(id) {
@@ -64,6 +54,6 @@ async function deleteNote(id) {
 }
 
 document.querySelector('#cancel-button').addEventListener('click', resetForm);
-function resetForm(hideSummary = true) { form.reset(); noteIdInput.value = ''; document.querySelector('#form-title').textContent = 'Write a note'; document.querySelector('#cancel-button').classList.add('hidden'); if (hideSummary) summary.classList.add('hidden'); }
+function resetForm() { form.reset(); noteIdInput.value = ''; document.querySelector('#form-title').textContent = 'Write a note'; document.querySelector('#cancel-button').classList.add('hidden'); }
 function showMessage(text) { message.textContent = text; setTimeout(() => { message.textContent = ''; }, 4000); }
 loadNotes();
