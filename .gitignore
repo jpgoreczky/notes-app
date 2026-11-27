@@ -5,3 +5,5 @@ node_modules/
 .idea
 .ripgreprc
 .vscode
+.neon
+.env.local

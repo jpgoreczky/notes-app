@@ -1,43 +1,32 @@
-require('dotenv').config();
+require('dotenv').config({ path: ['.env.local', '.env'], quiet: true });
 
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
+const { pool } = require('./db');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const dataFile = path.join(__dirname, 'data', 'notes.json');
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-function readNotes() {
-	const notes = JSON.parse(fs.readFileSync(dataFile, 'utf8'));
-	let changed = false;
+const noteColumns = 'id, title, body, tags, summary, ai_generated, created_at, updated_at';
 
-	notes.forEach((note) => {
-		if (!Array.isArray(note.tags) || note.tags.length === 0) {
-			note.tags = generateTags(note.title, note.body);
-			changed = true;
-		}
-		if (!note.summary) {
-			note.summary = makeSummary(note.body);
-			changed = true;
-		}
-		if (typeof note.aiGenerated !== 'boolean') {
-			note.aiGenerated = false;
-			changed = true;
-		}
-	});
-
-	if (changed) saveNotes(notes);
-	return notes;
+function toNote(row) {
+	return {
+		id: row.id,
+		title: row.title,
+		body: row.body,
+		tags: row.tags,
+		summary: row.summary,
+		aiGenerated: row.ai_generated,
+		createdAt: row.created_at.toISOString(),
+		updatedAt: row.updated_at.toISOString()
+	};
 }
 
-function saveNotes(notes) {
-	fs.writeFileSync(dataFile, JSON.stringify(notes, null, 2));
-}
+const isUuid = (value) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
 
 function generateTags(title, body) {
 	const text = `${title} ${body}`.toLowerCase();
@@ -108,8 +97,9 @@ async function generateWithAI(title, body) {
 	}
 }
 
-app.get('/api/notes', (req, res) => {
-	res.json(readNotes().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)));
+app.get('/api/notes', async (req, res) => {
+	const { rows } = await pool.query(`SELECT ${noteColumns} FROM notes ORDER BY updated_at DESC`);
+	res.json(rows.map(toNote));
 });
 
 app.post('/api/notes', async (req, res) => {
@@ -118,46 +108,43 @@ app.post('/api/notes', async (req, res) => {
 	if (!title || !body) return res.status(400).json({ error: 'Title and body are required.' });
 
 	const generated = await generateWithAI(title, body);
-	const now = new Date().toISOString();
-	const note = {
-		id: crypto.randomUUID(),
-		title,
-		body,
-		tags: generated.tags,
-		summary: generated.summary,
-		aiGenerated: generated.aiGenerated,
-		createdAt: now,
-		updatedAt: now
-	};
-	const notes = readNotes();
-	notes.push(note);
-	saveNotes(notes);
-	res.status(201).json(note);
+	const { rows } = await pool.query(
+		`INSERT INTO notes (id, title, body, tags, summary, ai_generated)
+		 VALUES ($1, $2, $3, $4, $5, $6) RETURNING ${noteColumns}`,
+		[crypto.randomUUID(), title, body, generated.tags, generated.summary, generated.aiGenerated]
+	);
+	res.status(201).json(toNote(rows[0]));
 });
 
 app.put('/api/notes/:id', async (req, res) => {
-	const notes = readNotes();
-	const note = notes.find((item) => item.id === req.params.id);
-	if (!note) return res.status(404).json({ error: 'Note not found.' });
+	if (!isUuid(req.params.id)) return res.status(404).json({ error: 'Note not found.' });
+	const title = String(req.body.title || '').trim();
+	const body = String(req.body.body || '').trim();
+	if (!title || !body) return res.status(400).json({ error: 'Title and body are required.' });
 
-	note.title = String(req.body.title || '').trim();
-	note.body = String(req.body.body || '').trim();
-	if (!note.title || !note.body) return res.status(400).json({ error: 'Title and body are required.' });
-	const generated = await generateWithAI(note.title, note.body);
-	note.tags = generated.tags;
-	note.summary = generated.summary;
-	note.aiGenerated = generated.aiGenerated;
-	note.updatedAt = new Date().toISOString();
-	saveNotes(notes);
-	res.json(note);
+	const existing = await pool.query('SELECT 1 FROM notes WHERE id = $1', [req.params.id]);
+	if (existing.rowCount === 0) return res.status(404).json({ error: 'Note not found.' });
+
+	const generated = await generateWithAI(title, body);
+	const { rows } = await pool.query(
+		`UPDATE notes SET title = $2, body = $3, tags = $4, summary = $5, ai_generated = $6, updated_at = now()
+		 WHERE id = $1 RETURNING ${noteColumns}`,
+		[req.params.id, title, body, generated.tags, generated.summary, generated.aiGenerated]
+	);
+	if (rows.length === 0) return res.status(404).json({ error: 'Note not found.' });
+	res.json(toNote(rows[0]));
 });
 
-app.delete('/api/notes/:id', (req, res) => {
-	const notes = readNotes();
-	const remainingNotes = notes.filter((note) => note.id !== req.params.id);
-	if (remainingNotes.length === notes.length) return res.status(404).json({ error: 'Note not found.' });
-	saveNotes(remainingNotes);
+app.delete('/api/notes/:id', async (req, res) => {
+	if (!isUuid(req.params.id)) return res.status(404).json({ error: 'Note not found.' });
+	const { rowCount } = await pool.query('DELETE FROM notes WHERE id = $1', [req.params.id]);
+	if (rowCount === 0) return res.status(404).json({ error: 'Note not found.' });
 	res.status(204).end();
+});
+
+app.get('/api/health', async (req, res) => {
+	const { rows } = await pool.query('SELECT 1 AS ok');
+	res.json({ database: rows[0].ok === 1 ? 'ok' : 'error' });
 });
 
 app.post('/api/summarize', async (req, res) => {
@@ -168,6 +155,11 @@ app.post('/api/summarize', async (req, res) => {
 
 app.get('/', (req, res) => {
 	res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.use((error, req, res, next) => {
+	console.error(error);
+	res.status(500).json({ error: 'Internal server error.' });
 });
 
 app.listen(port, () => {
