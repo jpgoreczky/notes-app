@@ -15,7 +15,24 @@ async function loadNotes() {
 function noteHtml(note) {
   const tags = note.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join('');
   const noteSummary = note.summary ? `<p class="note-summary"><strong>Summary:</strong> ${escapeHtml(note.summary)}</p>` : '';
-  return `<article class="note"><h3>${escapeHtml(note.title)}</h3><p>${escapeHtml(note.body)}</p>${noteSummary}<div class="tags">${tags}</div><div class="note-footer"><span class="note-date">Updated ${new Date(note.updatedAt).toLocaleString()}</span><div class="note-actions"><button class="edit-link" onclick="editNote('${note.id}')">Edit</button><button class="delete-link" onclick="deleteNote('${note.id}')">Delete</button></div></div></article>`;
+  return `<article class="note"><h3>${escapeHtml(note.title)}</h3>${bodyHtml(note.body)}${noteSummary}<div class="tags">${tags}</div><div class="note-footer"><span class="note-date">Updated ${new Date(note.updatedAt).toLocaleString()}</span><div class="note-actions"><button class="edit-link" onclick="editNote('${note.id}')">Edit</button><button class="delete-link" onclick="deleteNote('${note.id}')">Delete</button></div></div></article>`;
+}
+
+const PREVIEW_LENGTH = 200;
+
+function bodyHtml(body) {
+  if (body.length <= PREVIEW_LENGTH) return `<p>${escapeHtml(body)}</p>`;
+  const cut = body.slice(0, PREVIEW_LENGTH);
+  const lastSpace = cut.lastIndexOf(' ');
+  const preview = (lastSpace > PREVIEW_LENGTH * 0.6 ? cut.slice(0, lastSpace) : cut).trimEnd();
+  return `<div class="note-body collapsed"><p class="body-preview">${escapeHtml(preview)}…</p><p class="body-full">${escapeHtml(body)}</p><button type="button" class="toggle-link" aria-expanded="false" onclick="toggleNote(this)">Read more</button></div>`;
+}
+
+function toggleNote(button) {
+  const container = button.closest('.note-body');
+  const collapsed = container.classList.toggle('collapsed');
+  button.textContent = collapsed ? 'Read more' : 'Show less';
+  button.setAttribute('aria-expanded', String(!collapsed));
 }
 
 function escapeHtml(text) {

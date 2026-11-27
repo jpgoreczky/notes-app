@@ -114,6 +114,21 @@ button:hover {
   line-height: 1.4;
 }
 
+.note-body.collapsed .body-full,
+.note-body:not(.collapsed) .body-preview {
+  display: none;
+}
+
+.toggle-link {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .note-summary {
   color: #555;
 }
